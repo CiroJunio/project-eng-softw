@@ -21,7 +21,7 @@ TARGET = $(BINDIR)/mainApp
 # Encontra todos os arquivos .cpp em \test
 TEST_SRCS = $(wildcard $(TESTDIR)/*.cpp)
 # Converte .cpp de teste para .o (ex: test/main.cpp -> bin/test_main.o)
-TEST_OBJS = $(TEST_SRCS:$(TESTDIR)/%.cpp=$(BINDIR)/%.o)
+TEST_OBJS = $(TEST_SRCS:$(TESTDIR)/%.cpp=$(BINDIR)/test_%.o)
 # O executável de teste (pedido no passo 9)
 TEST_TARGET = $(BINDIR)/testeRegressivo
 
@@ -44,12 +44,12 @@ test: $(OBJS) $(TEST_OBJS)
 	@echo "Executável de teste criado em $(TEST_TARGET)"
 
 # Regra padrão para criar qualquer arquivo .o em \bin a partir de um .cpp em \src
-$(BINDIR)/%.o: $(SRCDIR)/*.cpp
+$(BINDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(BINDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Regra padrão para criar qualquer arquivo .o em \bin a partir de um .cpp em \test
-$(BINDIR)/%.o: $(TESTDIR)/*.cpp
+# Regra padrão para criar qualquer arquivo test_%.o em \bin a partir de um .cpp em \test
+$(BINDIR)/test_%.o: $(TESTDIR)/%.cpp
 	@mkdir -p $(BINDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
